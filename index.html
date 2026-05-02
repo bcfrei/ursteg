@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merket i Marka — Trail Running & Stier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --soil: #2a1f14;
+    --bark: #4a3728;
+    --moss: #3d4a2e;
+    --stone: #7a7065;
+    --lichen: #a8a090;
+    --birch: #e8e0d0;
+    --snow: #f5f2ec;
+    --rust: #b84c2a;
+    --sage: #7a9060;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--snow);
+    color: var(--soil);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    mix-blend-mode: multiply;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--soil);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bark);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--rust); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--soil);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 70%, rgba(61,74,46,0.4) 0%, transparent 60%);
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .hero-eyebrow::before {
+    content: '—';
+    margin-right: 0.5rem;
+    color: var(--rust);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--birch);
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--sage);
+  }
+
+  .hero-desc {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--lichen);
+    max-width: 340px;
+    position: relative;
+  }
+
+  .hero-right {
+    background: var(--moss);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Simulated terrain/landscape */
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(42,31,20,0.3) 0%, transparent 40%),
+      linear-gradient(135deg, #2d3a20 0%, #3d4a2e 40%, #4a5538 70%, #5a6545 100%);
+  }
+
+  .hero-right-content {
+    position: absolute;
+    bottom: 5rem;
+    right: 4rem;
+    text-align: right;
+  }
+
+  .hero-stat {
+    color: var(--birch);
+    opacity: 0.9;
+  }
+
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    display: block;
+  }
+
+  .hero-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 60px;
+    background: rgba(168,160,144,0.3);
+    margin: 1.5rem auto 1.5rem auto;
+  }
+
+  /* Topographic lines decoration */
+  .topo-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .topo-lines svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* TICKER */
+  .ticker {
+    background: var(--rust);
+    padding: 0.8rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-flex;
+    gap: 0;
+    animation: ticker 25s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--snow);
+    padding: 0 3rem;
+  }
+
+  .ticker-item::before {
+    content: '✦';
+    margin-right: 3rem;
+    opacity: 0.6;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION: ABOUT INTRO */
+  .section-intro {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0;
+    padding: 8rem 0;
+    border-bottom: 1px solid rgba(42,31,20,0.12);
+  }
+
+  .section-label {
+    padding: 0 4rem;
+    border-right: 1px solid rgba(42,31,20,0.12);
+  }
+
+  .section-label-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--stone);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    display: inline-block;
+  }
+
+  .section-body {
+    padding: 0 6rem 0 5rem;
+  }
+
+  .pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--soil);
+    margin-bottom: 2.5rem;
+  }
+
+  .pull-quote em {
+    font-style: italic;
+    color: var(--moss);
+  }
+
+  .body-text {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--bark);
+    max-width: 560px;
+    columns: 2;
+    column-gap: 2.5rem;
+  }
+
+  /* ROUTES SECTION */
+  .routes-section {
+    padding: 8rem 0;
+    background: var(--soil);
+  }
+
+  .routes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 4rem 4rem;
+    border-bottom: 1px solid rgba(232,224,208,0.1);
+  }
+
+  .section-title-large {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 900;
+    color: var(--birch);
+    line-height: 1.0;
+  }
+
+  .section-title-large span {
+    display: block;
+    font-style: italic;
+    color: var(--sage);
+    font-size: 0.6em;
+  }
+
+  .view-all-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(168,160,144,0.3);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .view-all-link:hover {
+    color: var(--rust);
+    border-color: var(--rust);
+  }
+
+  .routes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .route-card {
+    border-right: 1px solid rgba(232,224,208,0.08);
+    padding: 3rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .route-card:last-child { border-right: none; }
+
+  .route-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--rust);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .route-card:hover { background: rgba(232,224,208,0.03); }
+  .route-card:hover::after { transform: scaleX(1); }
+
+  .route-difficulty {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .difficulty-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .difficulty-dot.easy { background: var(--sage); }
+  .difficulty-dot.medium { background: #d4a020; }
+  .difficulty-dot.hard { background: var(--rust); }
+
+  .route-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--birch);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .route-location {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--stone);
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+  }
+
+  .route-stats {
+    display: flex;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(232,224,208,0.1);
+    padding-top: 1.5rem;
+  }
+
+  .route-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .route-stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--birch);
+  }
+
+  .route-stat-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* JOURNAL / LATEST POSTS */
+  .journal-section {
+    padding: 8rem 4rem;
+    border-bottom: 1px solid rgba(42,31,20,0.12);
+  }
+
+  .journal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4rem;
+  }
+
+  .journal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--soil);
+  }
+
+  .journal-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .journal-featured {
+    border-top: 2px solid var(--rust);
+    padding-top: 2rem;
+  }
+
+  .post-category {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+  }
+
+  .post-title-lg {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--soil);
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .post-title-lg:hover { color: var(--rust); }
+
+  .post-title-sm {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--soil);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .post-title-sm:hover { color: var(--rust); }
+
+  .post-excerpt {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--bark);
+    margin-bottom: 1.2rem;
+  }
+
+  .post-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--stone);
+    text-transform: uppercase;
+  }
+
+  .journal-side .side-post {
+    border-top: 1px solid rgba(42,31,20,0.12);
+    padding: 1.5rem 0;
+  }
+
+  .journal-side .side-post:first-child {
+    border-top: 2px solid var(--soil);
+  }
+
+  /* MANIFESTO BAND */
+  .manifesto {
+    background: var(--moss);
+    padding: 7rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: center;
+  }
+
+  .manifesto-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--birch);
+  }
+
+  .manifesto-quote::before {
+    content: '"';
+    font-size: 5rem;
+    line-height: 0;
+    vertical-align: -2rem;
+    color: var(--sage);
+    margin-right: 0.2rem;
+    font-style: normal;
+  }
+
+  .manifesto-text p {
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: rgba(232,224,208,0.75);
+    margin-bottom: 1.5rem;
+  }
+
+  .manifesto-sig {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--birch);
+    margin-top: 2rem;
+  }
+
+  /* GEAR / RESOURCES */
+  .gear-section {
+    padding: 8rem 4rem;
+    background: var(--birch);
+  }
+
+  .gear-header {
+    margin-bottom: 3rem;
+  }
+
+  .gear-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(42,31,20,0.12);
+    border: 1px solid rgba(42,31,20,0.12);
+  }
+
+  .gear-item {
+    background: var(--birch);
+    padding: 2.5rem;
+    transition: background 0.25s;
+    cursor: pointer;
+  }
+
+  .gear-item:hover { background: var(--snow); }
+
+  .gear-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .gear-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--soil);
+    margin-bottom: 0.4rem;
+  }
+
+  .gear-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--stone);
+    line-height: 1.6;
+  }
+
+  /* NEWSLETTER */
+  .newsletter {
+    padding: 7rem 4rem;
+    text-align: center;
+    border-top: 1px solid rgba(42,31,20,0.12);
+    border-bottom: 1px solid rgba(42,31,20,0.12);
+  }
+
+  .newsletter-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 1.5rem;
+  }
+
+  .newsletter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    color: var(--soil);
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .newsletter-sub {
+    font-size: 0.9rem;
+    color: var(--stone);
+    margin-bottom: 2.5rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    max-width: 420px;
+    margin: 0 auto;
+    gap: 0;
+    border: 1px solid var(--bark);
+  }
+
+  .newsletter-input {
+    flex: 1;
+    padding: 1rem 1.2rem;
+    border: none;
+    background: transparent;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--soil);
+    outline: none;
+  }
+
+  .newsletter-input::placeholder { color: var(--lichen); }
+
+  .newsletter-btn {
+    padding: 1rem 1.5rem;
+    background: var(--soil);
+    color: var(--birch);
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .newsletter-btn:hover { background: var(--rust); }
+
+  /* FOOTER */
+  footer {
+    background: var(--soil);
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--birch);
+    margin-bottom: 1rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.82rem;
+    color: var(--stone);
+    line-height: 1.7;
+  }
+
+  .footer-col-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: var(--stone);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--birch); }
+
+  .footer-bottom {
+    background: var(--soil);
+    border-top: 1px solid rgba(232,224,208,0.08);
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--stone);
+  }
+
+  /* SCROLL ANIMATION */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Merket i Marka</a>
+  <ul class="nav-links">
+    <li><a href="#">Stier</a></li>
+    <li><a href="#">Dagbok</a></li>
+    <li><a href="#">Utstyr</a></li>
+    <li><a href="#">Om meg</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="topo-lines">
+      <svg viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="200" cy="300" rx="180" ry="260" stroke="#e8e0d0" stroke-width="0.5"/>
+        <ellipse cx="200" cy="300" rx="150" ry="220" stroke="#e8e0d0" stroke-width="0.5"/>
+        <ellipse cx="200" cy="300" rx="120" ry="180" stroke="#e8e0d0" stroke-width="0.5"/>
+        <ellipse cx="200" cy="300" rx="90" ry="140" stroke="#e8e0d0" stroke-width="0.5"/>
+        <ellipse cx="200" cy="300" rx="60" ry="100" stroke="#e8e0d0" stroke-width="0.5"/>
+        <ellipse cx="200" cy="300" rx="30" ry="60" stroke="#e8e0d0" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="hero-eyebrow">Trail running i det norske</div>
+    <h1 class="hero-title">Merket<br>i <em>Marka</em></h1>
+    <p class="hero-desc">Stier som krever noe av deg. Ruter testet med beina, skrevet ned med ærlighet. Ingen turistfeller, bare merket løype og åpen himmel.</p>
+  </div>
+  <div class="hero-right">
+    <div class="topo-lines">
+      <svg viewBox="0 0 500 700" fill="none">
+        <path d="M50 650 Q150 400 250 300 Q350 200 400 100" stroke="#a8a090" stroke-width="0.8" fill="none"/>
+        <path d="M30 680 Q130 430 230 330 Q330 230 380 130" stroke="#a8a090" stroke-width="0.5" fill="none"/>
+        <path d="M70 620 Q170 370 270 270 Q370 170 420 70" stroke="#a8a090" stroke-width="0.5" fill="none"/>
+        <path d="M100 700 Q200 500 300 380 Q400 260 460 120" stroke="#7a9060" stroke-width="0.5" fill="none"/>
+      </svg>
+    </div>
+    <div class="hero-right-content">
+      <div class="hero-stat">
+        <span class="hero-stat-num">47</span>
+        <span class="hero-stat-label">Dokumenterte ruter</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">3.2k</span>
+        <span class="hero-stat-label">Kilometer løpt</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Oslomarka</span>
+    <span class="ticker-item">Jotunheimen</span>
+    <span class="ticker-item">Lofoten</span>
+    <span class="ticker-item">Hardangervidda</span>
+    <span class="ticker-item">Senja</span>
+    <span class="ticker-item">Rondane</span>
+    <span class="ticker-item">Preikestolen</span>
+    <span class="ticker-item">Oslomarka</span>
+    <span class="ticker-item">Jotunheimen</span>
+    <span class="ticker-item">Lofoten</span>
+    <span class="ticker-item">Hardangervidda</span>
+    <span class="ticker-item">Senja</span>
+    <span class="ticker-item">Rondane</span>
+    <span class="ticker-item">Preikestolen</span>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="section-intro">
+  <div class="section-label">
+    <span class="section-label-text">Om prosjektet</span>
+  </div>
+  <div class="section-body reveal">
+    <p class="pull-quote">Jeg begynte å løpe stier fordi veiene <em>ble for enkle</em>. Nå kan jeg ikke stoppe.</p>
+    <div class="body-text">
+      <p>Dette er ikke en nettside som selger deg noe. Det er en logg — ærlig, uperfekt og full av detaljer ingen andre gidder å skrive ned. Høydemeter, underlag, parkeringsforhold, hvor mobildekningen forsvinner.</p>
+      <p>Jeg dokumenterer ruter jeg har løpt selv, med egne feil inkludert. Målet er at du skal slippe å ta de samme omveiene jeg tok.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROUTES -->
+<section class="routes-section">
+  <div class="routes-header">
+    <h2 class="section-title-large">
+      Utvalgte<br>
+      <span>ruter</span>
+    </h2>
+    <a href="#" class="view-all-link">Se alle 47 ruter →</a>
+  </div>
+  <div class="routes-grid">
+    <div class="route-card reveal">
+      <div class="route-difficulty">
+        <span class="difficulty-dot easy"></span>
+        <span style="color: var(--sage)">Moderat</span>
+      </div>
+      <h3 class="route-name">Nordmarka Rundt</h3>
+      <div class="route-location">Oslomarka, Viken</div>
+      <p style="font-size:0.82rem; line-height:1.7; color:var(--lichen); margin-bottom:1.5rem;">En klassiker med mulighet for å forlenge etappene. Fantastisk i høstfarger. Unngå helger.</p>
+      <div class="route-stats">
+        <div class="route-stat">
+          <span class="route-stat-val">38 km</span>
+          <span class="route-stat-key">Distanse</span>
+        </div>
+        <div class="route-stat">
+          <span class="route-stat-val">1.100 m</span>
+          <span class="route-stat-key">Stigning</span>
+        </div>
+        <div class="route-stat">
+          <span class="route-stat-val">5–7 t</span>
+          <span class="route-stat-key">Tid</span>
+        </div>
+      </div>
+    </div>
+    <div class="route-card reveal reveal-delay-1">
+      <div class="route-difficulty">
+        <span class="difficulty-dot hard"></span>
+        <span style="color: var(--rust)">Krevende</span>
+      </div>
+      <h3 class="route-name">Senja Ridge</h3>
+      <div class="route-location">Senja, Troms</div>
+      <p style="font-size:0.82rem; line-height:1.7; color:var(--lichen); margin-bottom:1.5rem;">Teknisk og rå. Utsikten er umenneskelig. Krever erfaring på eksponert terreng og god orientering.</p>
+      <div class="route-stats">
+        <div class="route-stat">
+          <span class="route-stat-val">22 km</span>
+          <span class="route-stat-key">Distanse</span>
+        </div>
+        <div class="route-stat">
+          <span class="route-stat-val">2.400 m</span>
+          <span class="route-stat-key">Stigning</span>
+        </div>
+        <div class="route-stat">
+          <span class="route-stat-val">8–10 t</span>
+          <span class="route-stat-key">Tid</span>
+        </div>
+      </div>
+    </div>
+    <div class="route-card reveal reveal-delay-2">
+      <div class="route-difficulty">
+        <span class="difficulty-dot medium"></span>
+        <span style="color: #d4a020">Middels</span>
+      </div>
+      <h3 class="route-name">Preikestolen Loop</h3>
+      <div class="route-location">Ryfylke, Rogaland</div>
+      <p style="font-size:0.82rem; line-height:1.7; color:var(--lichen); margin-bottom:1.5rem;">Turistfellen unngått ved å starte kl. 05:30. Da er du alene. Returveien via Refsvatnet er undervurdert.</p>
+      <div class="route-stats">
+        <div class="route-stat">
+          <span class="route-stat-val">16 km</span>
+          <span class="route-stat-key">Distanse</span>
+        </div>
+        <div class="route-stat">
+          <span class="route-stat-val">800 m</span>
+          <span class="route-stat-key">Stigning</span>
+        </div>
+        <div class="route-stat">
+          <span class="route-stat-val">3–4 t</span>
+          <span class="route-stat-key">Tid</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="journal-section">
+  <div class="journal-header">
+    <h2 class="journal-title">Siste fra dagboken</h2>
+    <a href="#" class="view-all-link" style="color: var(--stone)">Alle innlegg →</a>
+  </div>
+  <div class="journal-grid">
+    <div class="journal-featured reveal">
+      <div class="post-category">Feltrapport</div>
+      <h3 class="post-title-lg">Jeg mislyktes på Hallingskarvet — og det var det beste som skjedde meg i år</h3>
+      <p class="post-excerpt">Det var dag tre. Knærne var stive, vannet var over og kartet sa at jeg hadde 18 kilometer igjen. Jeg satte meg ned på en stein og spiste den siste energibaren i stillhet.</p>
+      <div class="post-meta">12. april 2026 &nbsp;·&nbsp; 8 min lesing</div>
+    </div>
+    <div class="journal-side reveal reveal-delay-1">
+      <div class="side-post">
+        <div class="post-category">Utstyr</div>
+        <h4 class="post-title-sm">Etter 1.000 km med samme sko — her er hva jeg tenker</h4>
+        <div class="post-meta" style="margin-top:0.8rem">28. mars 2026</div>
+      </div>
+      <div class="side-post">
+        <div class="post-category">Tips</div>
+        <h4 class="post-title-sm">Sov aldri i fortelt. Og andre ting jeg lærte for sent</h4>
+        <div class="post-meta" style="margin-top:0.8rem">14. mars 2026</div>
+      </div>
+      <div class="side-post">
+        <div class="post-category">Rute</div>
+        <h4 class="post-title-sm">Lofoten om vinteren: Hva guidene ikke forteller deg</h4>
+        <div class="post-meta" style="margin-top:0.8rem">2. mars 2026</div>
+      </div>
+    </div>
+    <div class="journal-side reveal reveal-delay-2">
+      <div class="side-post">
+        <div class="post-category">Refleksjon</div>
+        <h4 class="post-title-sm">Hvorfor jeg sluttet å løpe med musikk</h4>
+        <div class="post-meta" style="margin-top:0.8rem">18. feb 2026</div>
+      </div>
+      <div class="side-post">
+        <div class="post-category">Feltrapport</div>
+        <h4 class="post-title-sm">Hardangervidda på 4 dager: fullstendig logg</h4>
+        <div class="post-meta" style="margin-top:0.8rem">3. feb 2026</div>
+      </div>
+      <div class="side-post">
+        <div class="post-category">Trening</div>
+        <h4 class="post-title-sm">Fjellstyrke uten gym: øvelsene jeg faktisk bruker</h4>
+        <div class="post-meta" style="margin-top:0.8rem">22. jan 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="reveal">
+    <p class="manifesto-quote">Stien er ikke bare et sted å løpe. Den er et sted å tenke, feile og finne ut hvem du er når ingen ser på.</p>
+  </div>
+  <div class="reveal reveal-delay-1">
+    <div class="manifesto-text">
+      <p>Jeg startet dette prosjektet fordi jeg var frustrert. Turveilederne på nett var fulle av stockbilder og tomme råd. Ingen fortalte meg at parkeringen var stengt etter kl. 22, at den siste kilometer var myr, eller at utsiktspunktet var like bra 400 meter nedover uten folkemengden.</p>
+      <p>Her skriver jeg det jeg faktisk opplevde. Med de vonde delene inkludert.</p>
+      <div class="manifesto-sig">— merketimarka.no</div>
+    </div>
+  </div>
+</section>
+
+<!-- GEAR -->
+<section class="gear-section">
+  <div class="gear-header reveal">
+    <p style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--stone);margin-bottom:0.8rem;">Det jeg faktisk bruker</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--soil);">Utstyr & ressurser</h2>
+  </div>
+  <div class="gear-grid reveal">
+    <div class="gear-item">
+      <span class="gear-icon">🗺</span>
+      <div class="gear-name">GPX-filer</div>
+      <div class="gear-desc">Last ned trackene mine direkte til Garmin, Suunto eller Komoot. Alle ruter.</div>
+    </div>
+    <div class="gear-item">
+      <span class="gear-icon">👟</span>
+      <div class="gear-name">Skoguide</div>
+      <div class="gear-desc">Hvilken sko til hvilken type terreng. Basert på real-world testing, ikke specs.</div>
+    </div>
+    <div class="gear-item">
+      <span class="gear-icon">📦</span>
+      <div class="gear-name">Pakkeliste</div>
+      <div class="gear-desc">Komplett pakkeliste for dagsturer, overnattinger og flerdagesturer i norsk natur.</div>
+    </div>
+    <div class="gear-item">
+      <span class="gear-icon">🌤</span>
+      <div class="gear-name">Værguide</div>
+      <div class="gear-desc">Hvilke værkilder å stole på, og hvordan lese prognoser for fjellet.</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-eyebrow">Hold deg oppdatert</div>
+  <h2 class="newsletter-title">Nye ruter.<br>Nye historier.</h2>
+  <p class="newsletter-sub">Ingen spam. Bare nye innlegg når de er klare — én til to ganger i måneden.</p>
+  <div class="newsletter-form">
+    <input class="newsletter-input" type="email" placeholder="din@epost.no">
+    <button class="newsletter-btn">Meld meg på</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">Merket i Marka</div>
+    <p class="footer-tagline">Ærlige stibeskrivelser fra norsk natur. Ingen sponsorer, ingen reklame — bare førstehåndserfaring.</p>
+  </div>
+  <div>
+    <div class="footer-col-title">Utforsk</div>
+    <ul class="footer-links">
+      <li><a href="#">Alle ruter</a></li>
+      <li><a href="#">Etter vanskelighetsgrad</a></li>
+      <li><a href="#">Etter region</a></li>
+      <li><a href="#">GPX-filer</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Les mer</div>
+    <ul class="footer-links">
+      <li><a href="#">Dagbok</a></li>
+      <li><a href="#">Utstyrguider</a></li>
+      <li><a href="#">Om prosjektet</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© 2026 Merket i Marka</span>
+  <span class="footer-copy">Laget med egne bein og litt CSS</span>
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
