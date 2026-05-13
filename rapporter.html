@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Løpsrapporter — UltraBjørn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --white: #ffffff;
+  --off: #f7f6f3;
+  --light: #edeae3;
+  --ink: #1a1814;
+  --ink-soft: #4a4640;
+  --ink-muted: #8a8480;
+  --green: #2d6a4f;
+  --green-light: #e8f4ef;
+  --green-mid: #52b788;
+  --radius: 16px;
+  --radius-sm: 8px;
+}
+
+body { background: var(--off); color: var(--ink); font-family: 'Cabinet Grotesk', sans-serif; }
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2.5rem;
+  background: rgba(247,246,243,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--light);
+}
+
+.nav-logo { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 600; color: var(--ink); text-decoration: none; }
+.nav-logo span { color: var(--green); }
+.nav-links { display: flex; gap: 0.4rem; list-style: none; }
+.nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 100px; transition: background 0.2s, color 0.2s; }
+.nav-links a:hover, .nav-links a.active { background: var(--light); color: var(--ink); }
+
+.page-header {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 9rem 2.5rem 3rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--green); }
+
+.page-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.page-sub { font-size: 0.95rem; color: var(--ink-muted); }
+
+.posts-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 8rem;
+}
+
+/* Rapport-kort */
+.report-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--light);
+  padding: 2rem 2.5rem;
+  margin-bottom: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.report-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 36px rgba(0,0,0,0.07);
+  border-color: var(--green-mid);
+}
+
+.report-week {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.4rem;
+}
+
+.report-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+
+.report-excerpt { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.65; }
+
+.report-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.report-place {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--green-light);
+  color: var(--green);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.report-date { font-size: 0.7rem; color: var(--ink-muted); }
+
+/* Tom tilstand */
+.empty-box {
+  background: var(--white);
+  border: 2px dashed #c8c2b6;
+  border-radius: var(--radius);
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.empty-icon { font-size: 2.2rem; display: block; margin-bottom: 1rem; opacity: 0.3; }
+.empty-title { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 0.4rem; }
+.empty-sub { font-size: 0.85rem; color: var(--ink-muted); }
+
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 2rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-logo { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 600; color: white; }
+.footer-logo span { color: var(--green-mid); }
+.footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Ultra<span>Bjørn</span></a>
+  <ul class="nav-links">
+    <li><a href="skotester.html">Skotester</a></li>
+    <li><a href="rapporter.html" class="active">Løpsrapporter</a></li>
+    <li><a href="index.html#om">Om</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <a class="back-link" href="index.html">← Tilbake</a>
+  <h1 class="page-title">Løpsrapporter</h1>
+  <p class="page-sub">Ukentlige rapporter fra stien — det som faktisk skjedde.</p>
+</div>
+
+<div class="posts-wrap">
+
+  <!-- Legg til rapport-kort her. Eksempel på format:
+
+  <div class="report-card">
+    <div>
+      <div class="report-week">Uke 18, 2026</div>
+      <div class="report-title">Tittelen på rapporten din</div>
+      <div class="report-excerpt">Kort sammendrag av turen...</div>
+    </div>
+    <div class="report-meta">
+      <span class="report-place">📍 Budor</span>
+      <span class="report-date">5. mai 2026</span>
+    </div>
+  </div>
+
+  -->
+
+  <div class="empty-box">
+    <span class="empty-icon">📍</span>
+    <div class="empty-title">Ingen rapporter ennå</div>
+    <div class="empty-sub">Her kommer løpsrapporter etter hvert.</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Ultra<span>Bjørn</span></div>
+  <div class="footer-copy">© 2026 UltraBjørn</div>
+</footer>
+
+</body>
+</html>

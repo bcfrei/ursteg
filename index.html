@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ursteg — Stiløping & Terrengultra</title>
+<title>UltraBjørn — Stiløping & Terrengultra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
 <style>
@@ -20,20 +20,12 @@
   --green: #2d6a4f;
   --green-light: #e8f4ef;
   --green-mid: #52b788;
-  --amber: #e07a30;
-  --amber-light: #fdf0e6;
   --radius: 16px;
   --radius-sm: 8px;
 }
 
 html { scroll-behavior: smooth; }
-
-body {
-  background: var(--off);
-  color: var(--ink);
-  font-family: 'Cabinet Grotesk', sans-serif;
-  overflow-x: hidden;
-}
+body { background: var(--off); color: var(--ink); font-family: 'Cabinet Grotesk', sans-serif; overflow-x: hidden; }
 
 /* NAV */
 nav {
@@ -44,7 +36,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 2.5rem;
-  background: rgba(247,246,243,0.88);
+  background: rgba(247,246,243,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--light);
 }
@@ -74,15 +66,11 @@ nav {
 .nav-links a:hover { background: var(--light); color: var(--ink); }
 
 /* HERO */
-.hero-wrap {
-  max-width: 1200px;
+.hero {
+  max-width: 800px;
   margin: 0 auto;
-  padding: 9rem 2.5rem 5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  min-height: 90vh;
+  padding: 12rem 2.5rem 6rem;
+  text-align: center;
 }
 
 .hero-tag {
@@ -95,14 +83,14 @@ nav {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.35rem 0.8rem;
+  padding: 0.35rem 0.9rem;
   border-radius: 100px;
-  margin-bottom: 1.8rem;
+  margin-bottom: 2rem;
 }
 
 .hero-title {
   font-family: 'Fraunces', serif;
-  font-size: clamp(3rem, 6vw, 5.2rem);
+  font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 600;
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -113,397 +101,102 @@ nav {
 .hero-title em { font-style: italic; color: var(--green); }
 
 .hero-desc {
-  font-size: 1.05rem;
-  line-height: 1.75;
+  font-size: 1.1rem;
+  line-height: 1.78;
   color: var(--ink-soft);
-  margin-bottom: 2.5rem;
-  max-width: 420px;
+  max-width: 520px;
+  margin: 0 auto 4rem;
 }
 
-.hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--ink);
-  color: white;
-  font-size: 0.85rem;
-  font-weight: 700;
-  padding: 0.85rem 1.6rem;
-  border-radius: 100px;
-  text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
-}
-
-.hero-cta:hover { background: var(--green); transform: translateY(-2px); }
-
-.hero-cards {
+/* CARDS */
+.cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2.5rem 8rem;
 }
 
-.stat-card {
+.card {
   background: var(--white);
   border-radius: var(--radius);
-  padding: 1.8rem;
+  padding: 2.5rem;
   border: 1px solid var(--light);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.07); }
-
-.stat-card.green-card { background: var(--green); border-color: var(--green); }
-.stat-card.green-card .stat-num,
-.stat-card.green-card .stat-label { color: white; }
-.stat-card.green-card .stat-label { opacity: 0.7; }
-
-.stat-card.wide-card {
-  grid-column: 1 / -1;
-  background: var(--amber-light);
-  border-color: #f0c9a0;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.stat-num {
-  font-family: 'Fraunces', serif;
-  font-size: 3rem;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.03em;
+  text-decoration: none;
   color: var(--ink);
-  margin-bottom: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
-.wide-card .stat-num { font-size: 1.2rem; color: var(--amber); }
-
-.stat-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--ink-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.09);
+  border-color: var(--green-mid);
 }
 
-.stat-divider {
-  width: 1px;
-  height: 36px;
-  background: #f0c9a0;
-  flex-shrink: 0;
-}
+.card-icon { font-size: 2rem; }
 
-/* TICKER */
-.ticker {
-  background: var(--ink);
-  padding: 0.85rem 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.ticker-inner {
-  display: inline-flex;
-  animation: ticker 18s linear infinite;
-}
-
-.ticker-item {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  padding: 0 2.5rem;
-}
-
-.ticker-item .dot { color: var(--green-mid); margin-right: 2.5rem; }
-
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-/* SHARED */
-.section {
-  padding: 6rem 2.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.section-tag {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 0.5rem;
-}
-
-.section-title {
+.card-title {
   font-family: 'Fraunces', serif;
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--ink);
-  margin-bottom: 0.4rem;
 }
 
-.section-sub {
-  font-size: 0.93rem;
+.card-desc {
+  font-size: 0.88rem;
+  line-height: 1.65;
   color: var(--ink-muted);
-  margin-bottom: 2.5rem;
 }
+
+.card-arrow {
+  margin-top: auto;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: gap 0.2s;
+}
+
+.card:hover .card-arrow { gap: 0.6rem; }
 
 /* ABOUT */
-.about-bg { background: var(--white); border-top: 1px solid var(--light); border-bottom: 1px solid var(--light); }
-
-.about-inner {
-  max-width: 1200px;
-  margin: 0 auto;
+.about-band {
+  background: var(--ink);
   padding: 6rem 2.5rem;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 6rem;
-  align-items: center;
+  text-align: center;
 }
 
 .about-label {
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 1.2rem;
-}
-
-.about-heading {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--green-mid);
+  margin-bottom: 1.5rem;
 }
 
 .about-text {
-  font-size: 1.05rem;
-  line-height: 1.82;
-  color: var(--ink-soft);
-}
-
-/* EMPTY STATE */
-.empty-box {
-  background: var(--white);
-  border: 2px dashed var(--mid);
-  border-radius: var(--radius);
-  padding: 5rem 2rem;
-  text-align: center;
-}
-
-.empty-icon { font-size: 2.2rem; display: block; margin-bottom: 1rem; opacity: 0.3; }
-
-.empty-title {
   font-family: 'Fraunces', serif;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--ink-soft);
-  margin-bottom: 0.4rem;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.88);
+  max-width: 660px;
+  margin: 0 auto;
 }
-
-.empty-sub { font-size: 0.85rem; color: var(--ink-muted); }
-
-/* JOURNAL */
-.journal-bg { background: var(--white); border-top: 1px solid var(--light); border-bottom: 1px solid var(--light); }
-
-.post-item {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 2rem;
-  align-items: start;
-  padding: 1.8rem 1rem;
-  border-bottom: 1px solid var(--light);
-  border-radius: var(--radius-sm);
-  transition: background 0.15s;
-  cursor: default;
-}
-
-.post-item:hover { background: var(--off); }
-.post-item:last-child { border-bottom: none; }
-
-.post-week {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 0.35rem;
-}
-
-.post-title {
-  font-family: 'Fraunces', serif;
-  font-size: 1.12rem;
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.35rem;
-}
-
-.post-body { font-size: 0.87rem; color: var(--ink-muted); line-height: 1.6; }
-
-.post-place {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  background: var(--light);
-  color: var(--ink-soft);
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.28rem 0.65rem;
-  border-radius: 100px;
-  white-space: nowrap;
-}
-
-.post-date { font-size: 0.7rem; color: var(--ink-muted); margin-top: 0.3rem; text-align: right; }
-
-/* FORM */
-.add-form-wrap {
-  background: var(--green-light);
-  border-radius: var(--radius);
-  padding: 2.5rem;
-  margin-top: 2.5rem;
-  border: 1px solid #b7dece;
-}
-
-.form-title {
-  font-family: 'Fraunces', serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 1.5rem;
-}
-
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-
-.form-field { display: flex; flex-direction: column; gap: 0.4rem; }
-
-.form-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-
-.form-input, .form-textarea {
-  padding: 0.8rem 1rem;
-  background: var(--white);
-  border: 1px solid #b7dece;
-  border-radius: var(--radius-sm);
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-size: 0.9rem;
-  color: var(--ink);
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.form-input:focus, .form-textarea:focus {
-  border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
-}
-
-.form-textarea { resize: vertical; min-height: 100px; line-height: 1.6; width: 100%; display: block; }
-
-.form-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--green);
-  color: white;
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  padding: 0.85rem 1.6rem;
-  border: none;
-  border-radius: 100px;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: background 0.2s, transform 0.15s;
-}
-
-.form-btn:hover { background: #235e43; transform: translateY(-1px); }
-
-/* NEWSLETTER */
-.newsletter-band {
-  background: var(--ink);
-  padding: 6rem 2.5rem;
-  text-align: center;
-}
-
-.newsletter-tag {
-  display: inline-block;
-  background: rgba(255,255,255,0.07);
-  color: rgba(255,255,255,0.5);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.35rem 0.8rem;
-  border-radius: 100px;
-  margin-bottom: 1.5rem;
-}
-
-.newsletter-title {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  font-weight: 600;
-  color: white;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin-bottom: 1rem;
-}
-
-.newsletter-title em { font-style: italic; color: var(--green-mid); }
-.newsletter-sub { font-size: 0.93rem; color: rgba(255,255,255,0.45); margin-bottom: 2.5rem; }
-
-.newsletter-form { display: flex; max-width: 380px; margin: 0 auto; gap: 0.6rem; }
-
-.newsletter-input {
-  flex: 1;
-  padding: 0.85rem 1.2rem;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 100px;
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-size: 0.85rem;
-  color: white;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.newsletter-input::placeholder { color: rgba(255,255,255,0.28); }
-.newsletter-input:focus { border-color: var(--green-mid); }
-
-.newsletter-btn {
-  padding: 0.85rem 1.4rem;
-  background: var(--green-mid);
-  color: white;
-  border: none;
-  border-radius: 100px;
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s;
-}
-
-.newsletter-btn:hover { background: var(--green); }
 
 /* FOOTER */
 footer {
   background: var(--ink);
   border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 2.5rem 2.5rem;
+  padding: 2rem 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -511,13 +204,13 @@ footer {
   gap: 1rem;
 }
 
-.footer-logo { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 600; color: white; }
+.footer-logo { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 600; color: white; }
 .footer-logo span { color: var(--green-mid); }
 
 .footer-links-row { display: flex; gap: 2rem; list-style: none; }
 
 .footer-links-row a {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: rgba(255,255,255,0.35);
   text-decoration: none;
   transition: color 0.2s;
@@ -529,139 +222,58 @@ footer {
 /* REVEAL */
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-d1 { transition-delay: 0.1s; }
-.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d1 { transition-delay: 0.12s; }
+.reveal-d2 { transition-delay: 0.24s; }
 </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="#">Ur<span>steg</span></a>
+  <a class="nav-logo" href="index.html">Ultra<span>Bjørn</span></a>
   <ul class="nav-links">
-    <li><a href="#skotester">Skotester</a></li>
-    <li><a href="#rapporter">Løpsrapporter</a></li>
+    <li><a href="skotester.html">Skotester</a></li>
+    <li><a href="rapporter.html">Løpsrapporter</a></li>
     <li><a href="#om">Om</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<div class="hero-wrap">
-  <div class="reveal">
-    <div class="hero-tag">Stiløping & Terrengultra</div>
-    <h1 class="hero-title">Løping på<br><em>egne premisser</em></h1>
-    <p class="hero-desc">I en hverdag med forpliktelser, familie og jobb — her deler jeg det som skjer på stien. Ærlig, ukentlig og uten filter.</p>
-    <a href="#rapporter" class="hero-cta">Les siste rapport →</a>
-  </div>
-  <div class="hero-cards reveal reveal-d1">
-    <div class="stat-card">
-      <div class="stat-num">12</div>
-      <div class="stat-label">Skotester</div>
-    </div>
-    <div class="stat-card green-card">
-      <div class="stat-num">31</div>
-      <div class="stat-label">Rapporter</div>
-    </div>
-    <div class="stat-card wide-card">
-      <div>
-        <div class="stat-num">Budor</div>
-        <div class="stat-label">Siste løpested</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div>
-        <div style="font-size:0.82rem;font-weight:500;color:var(--amber);line-height:1.5;">Finnskogen · Gran Canaria<br>Oslo · Hamar</div>
-        <div class="stat-label" style="margin-top:0.3rem;">Arenaer</div>
-      </div>
-    </div>
-  </div>
+<div class="hero reveal">
+  <div class="hero-tag">Stiløping & Terrengultra</div>
+  <h1 class="hero-title">Løping på<br><em>egne premisser</em></h1>
+  <p class="hero-desc">I en hverdag med forpliktelser, familie og jobb, finner jeg frihet og krefter i idretten stiløping og terrengultra. Idrettsdisipliner som krever kontinuitet, nysgjerrighet, disiplin og en brukbar skorotasjon.</p>
 </div>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item"><span class="dot">✦</span>Budor</span>
-    <span class="ticker-item"><span class="dot">✦</span>Finnskogen</span>
-    <span class="ticker-item"><span class="dot">✦</span>Gran Canaria</span>
-    <span class="ticker-item"><span class="dot">✦</span>Oslo</span>
-    <span class="ticker-item"><span class="dot">✦</span>Hamar</span>
-    <span class="ticker-item"><span class="dot">✦</span>Stiløping</span>
-    <span class="ticker-item"><span class="dot">✦</span>Terrengultra</span>
-    <span class="ticker-item"><span class="dot">✦</span>Budor</span>
-    <span class="ticker-item"><span class="dot">✦</span>Finnskogen</span>
-    <span class="ticker-item"><span class="dot">✦</span>Gran Canaria</span>
-    <span class="ticker-item"><span class="dot">✦</span>Oslo</span>
-    <span class="ticker-item"><span class="dot">✦</span>Hamar</span>
-    <span class="ticker-item"><span class="dot">✦</span>Stiløping</span>
-    <span class="ticker-item"><span class="dot">✦</span>Terrengultra</span>
-  </div>
+<div class="cards">
+  <a class="card reveal" href="skotester.html">
+    <div class="card-icon">👟</div>
+    <div class="card-title">Skotester</div>
+    <p class="card-desc">Tester basert på reelle kilometer og reelle forhold — ingen reklamesnakk.</p>
+    <div class="card-arrow">Se alle tester →</div>
+  </a>
+  <a class="card reveal reveal-d1" href="rapporter.html">
+    <div class="card-icon">📍</div>
+    <div class="card-title">Løpsrapporter</div>
+    <p class="card-desc">Ukentlige rapporter fra stien — Budor, Finnskogen, Gran Canaria, Oslo, Hamar.</p>
+    <div class="card-arrow">Se alle rapporter →</div>
+  </a>
 </div>
 
-<!-- OM -->
-<div class="about-bg" id="om">
-  <div class="about-inner">
-    <div class="reveal">
-      <div class="about-label">Om Ursteg</div>
-      <h2 class="about-heading">Kontinuitet.<br>Nysgjerrighet.<br>Disiplin.</h2>
-    </div>
-    <p class="about-text reveal reveal-d1">I en hverdag med forpliktelser, familie og jobb, finner jeg frihet og krefter i idretten stiløping og terrengultra. Idrettsdisipliner som krever kontinuitet, nysgjerrighet, disiplin og en brukbar skorotasjon.</p>
-  </div>
+<div class="about-band" id="om">
+  <div class="about-label">Om UltraBjørn</div>
+  <p class="about-text">I en hverdag med forpliktelser, familie og jobb, finner jeg frihet og krefter i idretten stiløping og terrengultra. Idrettsdisipliner som krever kontinuitet, nysgjerrighet, disiplin og en brukbar skorotasjon.</p>
 </div>
 
-<!-- SKOTESTER -->
-<div id="skotester">
-  <div class="section">
-    <div class="reveal">
-      <div class="section-tag">👟 Utstyr</div>
-      <h2 class="section-title">Skotester</h2>
-      <p class="section-sub">Tester basert på reelle kilometer og reelle forhold.</p>
-    </div>
-    <div class="empty-box reveal">
-      <span class="empty-icon">👟</span>
-      <div class="empty-title">Ingen tester ennå</div>
-      <div class="empty-sub">Her kommer skotester etter hvert som de er klare.</div>
-    </div>
-  </div>
-</div>
-
-<!-- LØPSRAPPORTER -->
-<div class="journal-bg" id="rapporter">
-  <div class="section">
-    <div class="reveal">
-      <div class="section-tag">📍 Felt</div>
-      <h2 class="section-title">Løpsrapporter</h2>
-      <p class="section-sub">Ukentlige rapporter fra stien — det som faktisk skjedde.</p>
-    </div>
-    <div class="empty-box reveal">
-      <span class="empty-icon">📍</span>
-      <div class="empty-title">Ingen rapporter ennå</div>
-      <div class="empty-sub">Her kommer løpsrapporter etter hvert.</div>
-    </div>
-  </div>
-</div>
-
-<!-- NYHETSBREV -->
-<div class="newsletter-band">
-  <div class="newsletter-tag">📬 Ukentlig oppdatering</div>
-  <h2 class="newsletter-title">Nye rapporter<br><em>hver uke.</em></h2>
-  <p class="newsletter-sub">Én e-post i uken. Ingen spam.</p>
-  <div class="newsletter-form">
-    <input class="newsletter-input" type="email" placeholder="din@epost.no">
-    <button class="newsletter-btn">Meld meg på</button>
-  </div>
-</div>
-
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Ur<span>steg</span></div>
+  <div class="footer-logo">Ultra<span>Bjørn</span></div>
   <ul class="footer-links-row">
-    <li><a href="#skotester">Skotester</a></li>
-    <li><a href="#rapporter">Rapporter</a></li>
+    <li><a href="skotester.html">Skotester</a></li>
+    <li><a href="rapporter.html">Rapporter</a></li>
     <li><a href="#om">Om</a></li>
   </ul>
-  <div class="footer-copy">© 2026 Ursteg</div>
+  <div class="footer-copy">© 2026 UltraBjørn</div>
 </footer>
 
 <script>
-  // Scroll reveal
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.08 });
