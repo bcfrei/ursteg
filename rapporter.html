@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Løpsrapporter — UltraBjørn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -20,11 +20,12 @@
   --green-light: #e8f4ef;
   --green-mid: #52b788;
   --radius: 16px;
-  --radius-sm: 8px;
 }
 
+html { scroll-behavior: smooth; }
 body { background: var(--off); color: var(--ink); font-family: 'Cabinet Grotesk', sans-serif; }
 
+/* NAV */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -37,139 +38,182 @@ nav {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--light);
 }
-
 .nav-logo { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 600; color: var(--ink); text-decoration: none; }
 .nav-logo span { color: var(--green); }
 .nav-links { display: flex; gap: 0.4rem; list-style: none; }
-.nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 100px; transition: background 0.2s, color 0.2s; }
+.nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 100px; transition: background 0.2s; }
 .nav-links a:hover, .nav-links a.active { background: var(--light); color: var(--ink); }
 
-.page-header {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 9rem 2.5rem 3rem;
-}
-
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--ink-muted);
-  text-decoration: none;
-  margin-bottom: 2rem;
-  transition: color 0.2s;
-}
-
+/* PAGE HEADER */
+.page-header { max-width: 860px; margin: 0 auto; padding: 9rem 2.5rem 2.5rem; }
+.back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; color: var(--ink-muted); text-decoration: none; margin-bottom: 2rem; transition: color 0.2s; }
 .back-link:hover { color: var(--green); }
-
-.page-title {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-}
-
+.page-title { font-family: 'Fraunces', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 0.5rem; }
 .page-sub { font-size: 0.95rem; color: var(--ink-muted); }
 
-.posts-wrap {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 2rem 2.5rem 8rem;
-}
+/* WRAPPER */
+.reports-wrap { max-width: 860px; margin: 0 auto; padding: 2rem 2.5rem 8rem; }
 
-/* Rapport-kort */
-.report-card {
+/* ─────────────────────────────────────────────
+   RAPPORT-KORT
+   Kopier alt mellom START og SLUTT for å lage en ny rapport
+───────────────────────────────────────────── */
+
+.rapport {
   background: var(--white);
   border-radius: var(--radius);
   border: 1px solid var(--light);
-  padding: 2rem 2.5rem;
-  margin-bottom: 1rem;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-  cursor: pointer;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1.5rem;
-  align-items: start;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
 }
 
-.report-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 36px rgba(0,0,0,0.07);
-  border-color: var(--green-mid);
+/* Topbilde — valgfritt */
+.rapport-img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  display: block;
 }
 
-.report-week {
+/* Header-info */
+.rapport-header {
+  padding: 2rem 2.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.rapport-meta-left { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.rapport-uke {
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--green);
-  margin-bottom: 0.4rem;
 }
 
-.report-title {
+.rapport-tittel {
   font-family: 'Fraunces', serif;
-  font-size: 1.25rem;
+  font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: 600;
+  letter-spacing: -0.02em;
   color: var(--ink);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 
-.report-excerpt { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.65; }
-
-.report-meta {
+.rapport-meta-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.5rem;
+  gap: 0.4rem;
   flex-shrink: 0;
 }
 
-.report-place {
+.rapport-sted {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   background: var(--green-light);
   color: var(--green);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 0.3rem 0.7rem;
+  padding: 0.3rem 0.75rem;
   border-radius: 100px;
-  white-space: nowrap;
 }
 
-.report-date { font-size: 0.7rem; color: var(--ink-muted); }
+.rapport-dato { font-size: 0.75rem; color: var(--ink-muted); }
+
+/* Fakta-rad — distanse, stigning, tid */
+.rapport-fakta {
+  display: flex;
+  gap: 0;
+  margin: 1.5rem 2.5rem 0;
+  border: 1px solid var(--light);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.fakta-item {
+  flex: 1;
+  padding: 0.9rem 1.2rem;
+  border-right: 1px solid var(--light);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.fakta-item:last-child { border-right: none; }
+
+.fakta-verdi {
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.fakta-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* Artikkeltekst */
+.rapport-tekst {
+  padding: 1.8rem 2.5rem 2.5rem;
+  font-size: 1rem;
+  line-height: 1.82;
+  color: var(--ink-soft);
+}
+
+/* Avsnitt i teksten */
+.rapport-tekst p { margin-bottom: 1.2rem; }
+.rapport-tekst p:last-child { margin-bottom: 0; }
+
+/* Mellombilde */
+.rapport-mellombilde {
+  margin: 1.5rem 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.rapport-mellombilde img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  display: block;
+}
+
+.rapport-mellombilde figcaption {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  padding: 0.6rem 0 0;
+  font-style: italic;
+}
+
+/* Highlight-boks */
+.rapport-highlight {
+  background: var(--green-light);
+  border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.4rem;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+  color: var(--green);
+  font-weight: 500;
+}
 
 /* Tom tilstand */
-.empty-box {
-  background: var(--white);
-  border: 2px dashed #c8c2b6;
-  border-radius: var(--radius);
-  padding: 5rem 2rem;
-  text-align: center;
-}
-
+.empty-box { background: var(--white); border: 2px dashed #c8c2b6; border-radius: var(--radius); padding: 5rem 2rem; text-align: center; }
 .empty-icon { font-size: 2.2rem; display: block; margin-bottom: 1rem; opacity: 0.3; }
 .empty-title { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 0.4rem; }
 .empty-sub { font-size: 0.85rem; color: var(--ink-muted); }
 
-footer {
-  background: var(--ink);
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 2rem 2.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
+footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
 .footer-logo { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 600; color: white; }
 .footer-logo span { color: var(--green-mid); }
 .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
@@ -192,62 +236,81 @@ footer {
   <p class="page-sub">Ukentlige rapporter fra stien — det som faktisk skjedde.</p>
 </div>
 
-<div class="posts-wrap">
+<div class="reports-wrap">
 
-  <!-- Legg til rapport-kort her. Eksempel på format:
+<!-- ═══════════════════════════════════════════════════════
+  START RAPPORT — kopier fra her...
+═══════════════════════════════════════════════════════ -->
 
-  <div class="report-card">
-    <div>
-      <div class="report-week">Uke 18, 2026</div>
-      <div class="report-title">Tittelen på rapporten din</div>
-      <div class="report-excerpt">Kort sammendrag av turen...</div>
-    </div>
-    <div class="report-meta">
-      <span class="report-place">📍 Budor</span>
-      <span class="report-date">5. mai 2026</span>
-    </div>
-  </div>
+  <div class="rapport">
 
-  -->
+    <!-- TOPBILDE (slett denne linjen hvis du ikke vil ha bilde) -->
+    <img class="rapport-img" src="bilder/FILNAVN.jpg" alt="Bildetekst">
 
-  <div class="report-card">
-    <div>
-      <div class="report-week">Uke 19, 2026</div>
-      <div class="report-title">Transvulcania 2026</div>
-      <div class="report-excerpt">Turen startet fra Gardermoen med fly via London Gatwick, før vi endelig landet på den vakre øya La Palma i Kanariøyene. La Palma er kjent som en av verdens bratteste øyer, og det er lett å forstå hvorfor. Landskapet er formet av vulkansk aktivitet gjennom millioner av år, og resultatet er et dramatisk og frodigt terreng som tar pusten fra deg – lenge før løpet i det hele tatt begynner.
-Om løpet
-Transvulcania Ultramaraton regnes som et av de hardeste fjellultramaratonene i verden, og er et av de mest prestisjefylte ultraløpene i Spania. Løpet arrangeres årlig på La Palma og trekker eliteløpere og amatører fra hele verden.
-Ruten er på 73 kilometer med en kumulativ høydeøkning på hele 4 350 meter og et høydetap på 4 057 meter. Starten befinner seg på havnivå, og ruten klatrer opp til øyas høyeste punkt, Roque de los Muchachos på 2 421 meter over havet, før den faller ned mot kysten igjen og ender i Los Llanos de Aridane.
-Startskuddet i mørket
-Startlinjen er ved Fuencaliente Lighthouse sør på øya, og klokken 06:00 går startskuddet – i stummende mørke. Pannelykten er derfor ikke bare anbefalt, den er obligatorisk. Allerede fra første skritt kaster løypa deg ut i stigning, og det er ingen nåde å hente i terrenget. Det vulkanske landskapet rundt Fuencaliente er røft og majestetisk, og selv i mørket aner man konturene av noe helt spesielt.
-Underveis på løypa
-Gjennom de 73 kilometerne er det satt opp rikelig med drikkevann- og matstasjoner langs ruten. De frivillige gjør en fantastisk jobb – alltid klare til å fylle vannflasker og hjelpe til med det løperne måtte trenge. Stemningen på stasjonene er varm og oppmuntrende, og de frivillige er en uvurderlig del av det som gjør Transvulcania til en opplevelse utover det vanlige.
-Terrenget varierer fra vulkansk stein og smale stier langs kratrene, til frodig skogslandskap høyere oppe. Utsikten fra Roque de los Muchachos er intet annet enn spektakulær – på klare dager kan man se naboøyene ligge som prikker i Atlanterhavet langt under.
-Obligatorisk utstyr
-For å stille til start stilles det strenge krav til sikkerhetsutstyr. Alle løpere må ha med:Løpevest eller belte med vann
-Pannlykt med rødt baklys
-Nødteppe
-Mobiltelefon med fulladet batteri
-Myk vannflaske eller gjenbrukbar kopp
-Fløyte
-
-Dette er ikke bare formaliteter – i et løp av denne størrelsesorden, i dette terrenget, kan utstyret bokstavelig talt redde liv.
-I mål i Los Llanos de Aridane
-Målområdet i Los Llanos de Aridane er fylt med folk, musikk og en stemning det er vanskelig å beskrive med ord. Etter mange timer i beina, med Kanariøyenes sol og vind som følgesvenn, er det en ubeskrivelig følelse å krysse målstreken omgitt av heiagjeng og medløpere fra hele verden.
-Transvulcania er ikke bare et løp – det er en reise gjennom et av naturens mest imponerende lerret, på en øy som setter sine spor i deg lenge etter at beina har sluttet å verke. 
-
+    <div class="rapport-header">
+      <div class="rapport-meta-left">
+        <div class="rapport-uke">Uke 19, 2026</div>
+        <h2 class="rapport-tittel">Transvulcania 2026</h2>
+      </div>
+      <div class="rapport-meta-right">
+        <span class="rapport-sted">📍 La Palma</span>
+        <span class="rapport-dato">5. mai 2026</span>
       </div>
     </div>
-    <div class="report-meta">
-      <span class="report-place">📍 La Palma</span>
-      <span class="report-date">5. mai 2026</span>
+
+    <!-- FAKTA-RAD (slett hele .rapport-fakta-blokken hvis du ikke vil ha den) -->
+    <div class="rapport-fakta">
+      <div class="fakta-item">
+        <div class="fakta-verdi">73 km</div>
+        <div class="fakta-label">Distanse</div>
+      </div>
+      <div class="fakta-item">
+        <div class="fakta-verdi">4 350 m</div>
+        <div class="fakta-label">Stigning</div>
+      </div>
+      <div class="fakta-item">
+        <div class="fakta-verdi">4 057 m</div>
+        <div class="fakta-label">Høydetap</div>
+      </div>
+      <div class="fakta-item">
+        <div class="fakta-verdi">06:00</div>
+        <div class="fakta-label">Start</div>
+      </div>
+    </div>
+
+    <div class="rapport-tekst">
+
+      <p>Turen startet fra Gardermoen med fly via London Gatwick, før vi endelig landet på den vakre øya La Palma i Kanariøyene. La Palma er kjent som en av verdens bratteste øyer, og det er lett å forstå hvorfor.</p>
+
+      <p>Landskapet er formet av vulkansk aktivitet gjennom millioner av år, og resultatet er et dramatisk og frodigt terreng som tar pusten fra deg — lenge før løpet i det hele tatt begynner.</p>
+
+      <!-- MELLOMBILDE (slett denne blokken hvis du ikke vil ha mellombilde) -->
+      <figure class="rapport-mellombilde">
+        <img src="bilder/FILNAVN2.jpg" alt="Bildetekst">
+        <figcaption>Her kan du skrive en kort bildetekst</figcaption>
+      </figure>
+
+      <p>Om løpet Transvulcania Ultramaraton regnes som et av de hardeste fjellultramaratonene i verden, og er et av de mest prestisjefylte ultraløpene i Spania. Løpet arrangeres årlig på La Palma og trekker eliteløpere og amatører fra hele verden.</p>
+
+      <!-- HIGHLIGHT-BOKS — en setning du vil fremheve (slett hvis du ikke vil ha) -->
+      <div class="rapport-highlight">
+        Ruten er på 73 kilometer med en kumulativ høydeøkning på 4 350 meter og et høydetap på 4 057 meter.
+      </div>
+
+      <p>Startlinjen er ved Fuencaliente Lighthouse sør på øya, og klokken 06:00 går startskuddet — i stummende mørke. Pannelykten er derfor ikke bare anbefalt, den er obligatorisk.</p>
+
+      <p>Allerede fra første skritt kaster løypa deg ut i stigning, og det er ingen nåde å hente i terrenget. Det vulkanske landskapet rundt Fuencaliente er røft og majestetisk, og selv i mørket aner man konturene av noe helt spesielt.</p>
+
     </div>
   </div>
-  <div class="empty-box">
-    <span class="empty-icon">📍</span>
-    <div class="empty-title">Ingen rapporter ennå</div>
-    <div class="empty-sub">Her kommer løpsrapporter etter hvert.</div>
-  </div>
+
+<!-- ...til her. ═══════════════════════════════════════════
+  SLUTT RAPPORT
+═══════════════════════════════════════════════════════ -->
+
+
+<!-- Legg til flere rapporter over denne linjen på samme måte -->
+
 
 </div>
 
